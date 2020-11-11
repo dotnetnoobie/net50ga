@@ -8,6 +8,7 @@
     <Authorized>
         Hello, @context.User.Identity.Name!
         <button class="nav-link btn btn-link" @onclick="BeginLogout">Log out</button>
+        <button class="nav-link btn btn-link" @onclick="ResetPassword">Reset password</button>
     </Authorized>
     <NotAuthorized>
         <a href="authentication/login">Log in</a>
@@ -19,5 +20,18 @@
     {
         await SignOutManager.SetSignOutState();
         Navigation.NavigateTo("authentication/logout");
+    }
+
+    private void ResetPassword(MouseEventArgs args)
+    {
+        Navigation.NavigateTo("https://blazorb2capp.b2clogin.com/blazorb2capp.onmicrosoft.com/oauth2/v2.0/authorize?" +
+            "client_id=328c3882-ae8f-4709-94b4-4ca50460d94b" +
+            "&redirect_uri=/passwordreset-callback" +
+            "&response_mode=query" +
+            "&response_type=id_token" +
+            "&scope=openid" +
+            $"&nonce={Guid.NewGuid()}" +
+            "&state=12345" +
+            "&p=B2C_1_PasswordReset");
     }
 }
